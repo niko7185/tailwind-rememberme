@@ -5,11 +5,11 @@
         <h1 class="opacity-60">REMEMBER ME</h1>
         <blue-button @click="showForm = true"><span class="font-bold">+</span> Add</blue-button>
       </section>
-      <section v-if="showForm" class="rounded-md my-4 bg-gray-50 px-4 py-4">
-        <resource-form :resource="newResource" @send-input="retrieveInput"></resource-form>
+      <section v-if="showForm" class="rounded-md my-4 bg-gray-50 px-4 py-4 dark:bg-gray-700 dark:text-white">
+        <resource-form @send-input="addResource"></resource-form>
       </section>
       <ResourceList :resources="resources" />
-      <dashed-button @click="addResource">Add resource</dashed-button>
+      <dashed-button @click="showForm = true">Add resource</dashed-button>
       
     </article>
   </main>
@@ -35,25 +35,17 @@ export default {
         { title: "Official Guide", description: "The official Vue.js documentation.", url: "https://vuejs.org/" },
         { title: "Google", description: "Learn to google...", url: "https://www.google.com/" },
       ],
-      newResource: {
-        title: "", description: "", url: ""
-      },
       showForm: false,
     };
   },
   methods: {
-    retrieveInput(resource) {
-      this.newResource = resource;
-    },
-    addResource() {
+    addResource(resource) {
 
-      if (!this.newResource.title || !this.newResource.description || !this.newResource.url) {
+      if (!resource.title || !resource.description || !resource.url) {
         return;
       }
 
-      this.resources.push(this.newResource);
-
-      this.newResource = {title: "", description: "", url: ""};
+      this.resources.push(resource);
 
       this.showForm = false;
     },
